@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div align="center">
 
 <img src="https://media.giphy.com/media/l0HlNaQ6gWfllcjDO/giphy.gif" width="220"/>
@@ -38,3 +39,5 @@ i'm currently learning web development and experimenting with:
 + building my own portfolio
 + testing different visual ideas
 + learning by making mistakes (and trying again)
+=======
+>>>>>>> 45bdfb8 (atualizações)
