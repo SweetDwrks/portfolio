@@ -1,6 +1,12 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Quicksand&size=26&duration=2600&pause=800&color=FF3B3F&center=true&vCenter=true&width=750&lines=☀️+Sweet+(Maria+Vitória);creating+beautiful+things+with+code;interfaces+with+personality;learning+a+little+every+day" />
+<img src="https://media.giphy.com/media/l0HlNaQ6gWfllcjDO/giphy.gif" width="220"/>
+
+<br><br>
+
+<img
+src="https://readme-typing-svg.demolab.com?font=Quicksand&size=26&duration=2600&pause=800&color=FF3B3F&center=true&vCenter=true&width=750&lines=%E2%98%80%EF%B8%8F+Sweet+(Maria+Vit%C3%B3ria);creating+beautiful+things+with+code;interfaces+with+personality;learning+a+little+every+day"
+/>
 
 <br/>
 
