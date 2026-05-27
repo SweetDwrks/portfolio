@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sobre Maria Vitória — Desenvolvedora Full Stack" />
+  <title>Sobre · Maria Vitória</title>
+  <link rel="stylesheet" href="/portfolio/styles/style.css" />
+  <script>
+    (function () {
+      var t = localStorage.getItem('mv-theme');
+      var d = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t || d);
+    })();
+  </script>
+
+  <style>
+    /* Estatísticas rápidas em linha */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--crimson);
+      display: block;
+    }
+
+    [data-theme="dark"] .stat-num { color: var(--gold-lunar); }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* Timeline de experiência */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.38rem;
+      top: 0.4rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--crimson);
+      border: 2px solid var(--bg);
+    }
+
+    [data-theme="dark"] .timeline-item::before {
+      background: var(--gold-lunar);
+      border-color: var(--bg);
+    }
+
+    .timeline-date {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 0.25rem;
+    }
+
+    [data-theme="dark"] .timeline-date { color: var(--gold-lunar); }
+
+    .timeline-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-company {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* Barra de nível de habilidade */
+    .skill-bar-wrap { margin-bottom: 1rem; }
+
+    .skill-bar-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+      font-size: 0.82rem;
+    }
+
+    .skill-bar-name { color: var(--text); font-weight: 500; }
+    .skill-bar-pct  { color: var(--text-muted); }
+
+    .skill-bar-track {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--wine), var(--crimson));
+      border-radius: 2px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    [data-theme="dark"] .skill-bar-fill {
+      background: linear-gradient(to right, var(--blush), var(--gold-lunar));
+    }
+
+    .skill-bar-fill.animated { width: var(--w); }
+
+    /* Página hero */
+    .page-hero {
+      padding: 10rem 0 5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    /* ── Intro de hobbies ── */
+    .hobbies-intro {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Grid de cards de hobbies ── */
+    .hobbies-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 500px) {
+      .hobbies-grid { grid-template-columns: 1fr; }
+    }
+
+    .hobby-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem 1.1rem;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      cursor: default;
+    }
+
+    .hobby-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--crimson);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+    } 
+
+    [data-theme="dark"] .hobby-card:hover {
+      border-color: var(--gold-lunar);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    }
+
+    .hobby-card-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .hobby-card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .hobby-card-title {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    .hobby-card-desc {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="lunar-canvas" aria-hidden="true"></canvas>
+
+  <!-- Navegação -->
+  <nav role="navigation">
+    <a href="/portfolio/pages/index.html" class="nav-logo">Maria Vitória</a>
+    <ul class="nav-links" role="list">
+      <li><a href="/portfolio/pages/index.html" data-i18n="nav.home">Início</a></li>
+      <li><a href="/portfolio/pages/about.html"    data-i18n="nav.about" class="active">Sobre</a></li>
+      <li><a href="/portfolio/pages/projects.html" data-i18n="nav.projects">Projetos</a></li>
+      <li><a href="/portfolio/pages/contact.html"  data-i18n="nav.contact">Contato</a></li>
+    </ul>
+    <div class="nav-controls">
+      <button class="ctrl-btn" id="lang-btn">PT</button>
+      <button class="ctrl-btn" id="theme-btn"><span class="theme-icon">🌙</span></button>
+      <button class="nav-hamburger" id="hamburger" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Menu mobile -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu-drawer">
+      <button class="mobile-menu-close" id="mobile-close">✕</button>
+      <a href="/portfolio/pages/index.html" data-i18n="nav.home">Início</a>
+      <a href="/portfolio/pages/about.html"    data-i18n="nav.about">Sobre</a>
+      <a href="/portfolio/pages/projects.html" data-i18n="nav.projects">Projetos</a>
+      <a href="/portfolio/pages/contact.html"  data-i18n="nav.contact">Contato</a>
+    </div>
+  </div>
+
+  <!-- Banner da página -->
+  <div class="page-hero">
+    <div class="star-field" aria-hidden="true"></div>
+    <div class="container">
+      <span class="section-tag fade-up" data-i18n="about.tag">Sobre mim</span>
+      <h1 class="section-title fade-up" style="font-size: clamp(2.5rem,5vw,4rem);">
+        <span data-i18n="about.title">Quem sou</span> <em data-i18n="about.title.em">eu</em>
+      </h1>
+    </div>
+  </div>
+
+  <!-- ══ Conteúdo principal: foto + texto ══ -->
+  <section style="padding-top: 0;">
+    <div class="container">
+      <div class="about-grid">
+
+        <!-- Lado esquerdo: foto e números rápidos -->
+        <div class="about-photo-side fade-up">
+         
+          <div class="about-photo-frame" role="img" aria-label="Foto de Maria Vitória">
+            🌙
+          </div>
+
+          <!-- Estatísticas rápidas -->
+          <div class="stats-row" style="margin-top: 1.5rem;">
+            <div class="stat-card">
+              <span class="stat-num">3+</span>
+              <span class="stat-label">Anos</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-num">20+</span>
+              <span class="stat-label">Projetos</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-num">8+</span>
+              <span class="stat-label">Tecnologias</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lado direito: texto e seções -->
+        <div class="about-content fade-up">
+
+          <!-- Bio longa -->
+          <p data-i18n="about.p1">
+            Sou Maria Vitória, desenvolvedora full stack apaixonada por criar soluções digitais que unem estética e funcionalidade. Acredito que bom código é aquele que resolve problemas reais com elegância.
+          </p>
+          <p data-i18n="about.p2">
+            Trabalho com desenvolvimento web desde 2022, construindo projetos que vão de APIs robustas a interfaces cuidadosamente projetadas. Cada linha de código é uma oportunidade de fazer algo incrível.
+          </p>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.9;">
+            Sou apaixonada por boas práticas de desenvolvimento, código limpo e por aprender continuamente. Acredito na importância da colaboração e comunicação para construir produtos que realmente importam para as pessoas.
+          </p>
+
+          <!-- Barras de habilidade -->
+          <h3>Nível de proficiência</h3>
+
+          <div class="skill-bars">
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-header">
+                <span class="skill-bar-name">Python / Flask</span>
+                <span class="skill-bar-pct">90%</span>
+              </div>
+              <div class="skill-bar-track">
+                <div class="skill-bar-fill" style="--w: 90%"></div>
+              </div>
+            </div>
+
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-header">
+                <span class="skill-bar-name">JavaScript</span>
+                <span class="skill-bar-pct">85%</span>
+              </div>
+              <div class="skill-bar-track">
+                <div class="skill-bar-fill" style="--w: 85%"></div>
+              </div>
+            </div>
+
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-header">
+                <span class="skill-bar-name">HTML5 / CSS3</span>
+                <span class="skill-bar-pct">95%</span>
+              </div>
+              <div class="skill-bar-track">
+                <div class="skill-bar-fill" style="--w: 95%"></div>
+              </div>
+            </div>
+
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-header">
+                <span class="skill-bar-name">Node.js</span>
+                <span class="skill-bar-pct">75%</span>
+              </div>
+              <div class="skill-bar-track">
+                <div class="skill-bar-fill" style="--w: 75%"></div>
+              </div>
+            </div>
+
+            <div class="skill-bar-wrap">
+              <div class="skill-bar-header">
+                <span class="skill-bar-name">SQL (MySQL / SQLite)</span>
+                <span class="skill-bar-pct">80%</span>
+              </div>
+              <div class="skill-bar-track">
+                <div class="skill-bar-fill" style="--w: 80%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline de experiência -->
+          <h3>Experiência</h3>
+          <div class="timeline">
+
+            <div class="timeline-item">
+              <div class="timeline-date">2024 — Presente</div>
+              <div class="timeline-title">Desenvolvedora Full Stack Freelance</div>
+              <div class="timeline-company">Autônoma</div>
+              <p class="timeline-desc">Desenvolvimento de aplicações web sob demanda para clientes de diferentes segmentos, do briefing ao deploy.</p>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-date">2023 — 2024</div>
+              <div class="timeline-title">Desenvolvedora Backend Jr.</div>
+              <div class="timeline-company">Startup de Tecnologia</div>
+              <p class="timeline-desc">Construção e manutenção de APIs REST em Python/Flask, integração com bancos de dados MySQL e suporte ao time de produto.</p>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-date">2022 — 2023</div>
+              <div class="timeline-title">Estagiária de Desenvolvimento Web</div>
+              <div class="timeline-company">Agência Digital</div>
+              <p class="timeline-desc">Criação de landing pages, manutenção de sites WordPress e primeiros projetos com JavaScript e integração de APIs.</p>
+            </div>
+
+          </div>
+
+          <!-- Hobbies -->
+          <h3 data-i18n="about.hobbies.title">Além do código ✨</h3>
+          <p class="hobbies-intro" data-i18n="about.hobbies.intro">Fora do editor de código, você me encontra mergulhada em universos ficcionais, explorando novos lugares ou simplesmente curtindo um café com uma boa playlist no fundo. ☕</p>
+
+          <div class="hobbies-grid">
+
+            <div class="hobby-card fade-up" data-hobby="dorama">
+              <div class="hobby-card-icon">🎬</div>
+              <div class="hobby-card-body">
+                <span class="hobby-card-title" data-i18n="hobby.dorama">K-dramas & Doramas</span>
+                <span class="hobby-card-desc" data-i18n="hobby.dorama.desc">Sempre com uma série asiática na fila — de romances coreanos a thrillers japoneses. Quem me avisa quando sair nova temporada?</span>
+              </div>
+            </div>
+
+            <div class="hobby-card fade-up" data-hobby="read">
+              <div class="hobby-card-icon">📖</div>
+              <div class="hobby-card-body">
+                <span class="hobby-card-title" data-i18n="hobby.read">Leituras</span>
+                <span class="hobby-card-desc" data-i18n="hobby.read.desc">Ficção científica, fantasia e livros técnicos convivem na mesma estante. Nada como uma boa história para recarregar as energias.</span>
+              </div>
+            </div>
+
+            <div class="hobby-card fade-up" data-hobby="music">
+              <div class="hobby-card-icon">🎧</div>
+              <div class="hobby-card-body">
+                <span class="hobby-card-title" data-i18n="hobby.music">Música</span>
+                <span class="hobby-card-desc" data-i18n="hobby.music.desc">Playlist no fone é item obrigatório no fluxo de desenvolvimento. Lo-fi para focar, K-pop para animar, jazz para pensar.</span>
+              </div>
+            </div>
+
+            <div class="hobby-card fade-up" data-hobby="travel">
+              <div class="hobby-card-icon">✈️</div>
+              <div class="hobby-card-body">
+                <span class="hobby-card-title" data-i18n="hobby.travel">Viagens & Explorar o mundo</span>
+                <span class="hobby-card-desc" data-i18n="hobby.travel.desc">Cada lugar novo é um reset criativo. Pequenas escapadas ou grandes aventuras — o importante é conhecer gente nova e histórias diferentes.</span>
+              </div>
+            </div>
+
+            <div class="hobby-card fade-up" data-hobby="astro">
+              <div class="hobby-card-icon">🌙</div>
+              <div class="hobby-card-body">
+                <span class="hobby-card-title" data-i18n="hobby.astro">Astronomia</span>
+                <span class="hobby-card-desc" data-i18n="hobby.astro.desc">Olhar para o céu e lembrar o quanto o universo é imenso. Uma forma favorita de ganhar perspectiva nos dias difíceis.</span>
+              </div>
+            </div>
+
+            <div class="hobby-card fade-up" data-hobby="design">
+              <div class="hobby-card-icon">🎨</div>
+              <div class="hobby-card-body">
+                <span class="hobby-card-title" data-i18n="hobby.design">Design & Fotografia</span>
+                <span class="hobby-card-desc" data-i18n="hobby.design.desc">O olhar de design transborda para fora do código — nas fotos, nas cores do dia a dia e em tudo que é bonito de ver.</span>
+              </div>
+            </div>
+
+          </div><!-- /hobbies-grid -->
+
+        </div>
+        <!-- /about-content -->
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer>
+    <div class="footer-content">
+      <span class="footer-logo">Maria Vitória</span>
+      <p class="footer-copy" data-i18n="footer.copy">Feito com ♥ e muito café por Maria Vitória</p>
+      <span class="footer-moon" aria-hidden="true">🌙</span>
+    </div>
+  </footer>
+
+  <script src="/portfolio/script/script.js"></script>
+
+  <!--
+    Script de animação das barras de habilidade.
+    Usa IntersectionObserver para animar as barras quando ficam visíveis.
+    A largura é definida pela variável CSS --w em cada barra.
+  -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const bars = document.querySelectorAll('.skill-bar-fill');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Adiciona a classe que ativa a transição de largura
+            entry.target.classList.add('animated');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      bars.forEach(bar => observer.observe(bar));
+    });
+  </script>
+
+</body>
+</html>

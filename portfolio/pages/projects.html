@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Projetos de Maria Vitória — Desenvolvedora Full Stack" />
+  <title>Projetos · Maria Vitória</title>
+  <link rel="stylesheet" href="/portfolio/styles/style.css" />
+  <script>
+    (function () {
+      var t = localStorage.getItem('mv-theme');
+      var d = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t || d);
+    })();
+  </script>
+
+  <!-- Estilos adicionais específicos desta página -->
+  <style>
+    /* Grade expandida de projetos com filtro por categoria */
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+
+    .filter-btn {
+      padding: 0.45rem 1.2rem;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--crimson);
+      color: #fff;
+      border-color: var(--crimson);
+    }
+
+    [data-theme="dark"] .filter-btn:hover,
+    [data-theme="dark"] .filter-btn.active {
+      background: var(--gold-lunar);
+      color: var(--wine);
+      border-color: var(--gold-lunar);
+    }
+
+    /* Card oculto durante filtro */
+    .project-card.hidden {
+      display: none;
+    }
+
+    /* Página header (banner interno) */
+    .page-hero {
+      padding: 10rem 0 5rem;
+      text-align: center;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Canvas lunar de fundo -->
+  <canvas id="lunar-canvas" aria-hidden="true"></canvas>
+
+  <!-- ══ Navegação ══ -->
+  <nav role="navigation">
+    <a href="/portfolio/pages/index.html" class="nav-logo">Maria Vitória</a>
+    <ul class="nav-links" role="list">
+      <li><a href="/portfolio/pages/index.html"       data-i18n="nav.home">Início</a></li>
+      <li><a href="/portfolio/pages/about.html"          data-i18n="nav.about">Sobre</a></li>
+      <li><a href="/portfolio/pages/projects.html"       data-i18n="nav.projects" class="active">Projetos</a></li>
+      <li><a href="/portfolio/pages/contact.html"        data-i18n="nav.contact">Contato</a></li>
+    </ul>
+    <div class="nav-controls">
+      <button class="ctrl-btn" id="lang-btn" aria-label="Trocar idioma">PT</button>
+      <button class="ctrl-btn" id="theme-btn" aria-label="Alternar tema">
+        <span class="theme-icon">🌙</span>
+      </button>
+      <button class="nav-hamburger" id="hamburger" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Menu mobile -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu-drawer">
+      <button class="mobile-menu-close" id="mobile-close">✕</button>
+      <a href="/portfolio/pages/index.html" data-i18n="nav.home">Início</a>
+      <a href="/portfolio/pages/about.html"    data-i18n="nav.about">Sobre</a>
+      <a href="/portfolio/pages/projects.html" data-i18n="nav.projects">Projetos</a>
+      <a href="/portfolio/pages/contact.html"  data-i18n="nav.contact">Contato</a>
+    </div>
+  </div>
+
+  <!-- ══ Banner da página ══ -->
+  <div class="page-hero">
+    <div class="star-field" aria-hidden="true"></div>
+    <div class="container">
+      <span class="section-tag fade-up" data-i18n="proj.tag">Portfólio</span>
+      <h1 class="section-title fade-up" style="font-size: clamp(2.5rem,5vw,4rem);">
+        <span data-i18n="proj.title">Projetos</span> <em data-i18n="proj.title.em">em destaque</em>
+      </h1>
+      <p class="section-desc fade-up" data-i18n="proj.desc">
+        Uma seleção dos trabalhos que mais me orgulho, combinando criatividade e técnica.
+      </p>
+    </div>
+  </div>
+
+  <!-- ══ Grade de projetos com filtros ══ -->
+  <section style="padding-top: 1rem;">
+    <div class="container">
+
+      <!--
+        Barra de filtros — cada botão filtra os cards pelo atributo data-category.
+        O JavaScript abaixo na página controla a visibilidade.
+      -->
+      <div class="filter-bar fade-up" role="group" aria-label="Filtrar projetos">
+        <button class="filter-btn active" data-filter="all">Todos</button>
+        <button class="filter-btn" data-filter="webapp">Web App</button>
+        <button class="filter-btn" data-filter="api">API</button>
+        <button class="filter-btn" data-filter="dashboard">Dashboard</button>
+        <button class="filter-btn" data-filter="mobile">Mobile</button>
+      </div>
+
+      <!-- Grade de projetos -->
+      <div class="projects-grid" id="projects-grid">
+
+        <!-- Projeto 1 -->
+        <article class="project-card fade-up" data-category="webapp">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <span class="card-tag" data-i18n="proj.p1.tag">Web App</span>
+            <h2 class="card-title" data-i18n="proj.p1.title">Gestão de Tarefas</h2>
+            <p class="card-desc" data-i18n="proj.p1.desc">
+              Aplicação full stack para organização de tarefas com autenticação, categorias e filtros avançados.
+            </p>
+            <div class="card-tech">
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">Flask</span>
+              <span class="tech-pill">SQLite</span>
+              <span class="tech-pill">JavaScript</span>
+              <span class="tech-pill">CSS3</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link" data-i18n="proj.demo">Demo</a>
+              <a href="#" class="card-link" data-i18n="proj.code">Código</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Projeto 2 -->
+        <article class="project-card fade-up" data-category="api">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <span class="card-tag" data-i18n="proj.p2.tag">API REST</span>
+            <h2 class="card-title" data-i18n="proj.p2.title">API de E-commerce</h2>
+            <p class="card-desc" data-i18n="proj.p2.desc">
+              API robusta com rotas protegidas, carrinho de compras, pagamentos e painel administrativo.
+            </p>
+            <div class="card-tech">
+              <span class="tech-pill">Node.js</span>
+              <span class="tech-pill">MySQL</span>
+              <span class="tech-pill">JavaScript</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link" data-i18n="proj.demo">Demo</a>
+              <a href="#" class="card-link" data-i18n="proj.code">Código</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Projeto 3 -->
+        <article class="project-card fade-up" data-category="dashboard">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <span class="card-tag" data-i18n="proj.p3.tag">Dashboard</span>
+            <h2 class="card-title" data-i18n="proj.p3.title">Painel Analytics</h2>
+            <p class="card-desc" data-i18n="proj.p3.desc">
+              Dashboard interativo com visualizações de dados em tempo real, filtros e exportação em CSV.
+            </p>
+            <div class="card-tech">
+              <span class="tech-pill">HTML5</span>
+              <span class="tech-pill">CSS3</span>
+              <span class="tech-pill">JavaScript</span>
+              <span class="tech-pill">Python</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link" data-i18n="proj.demo">Demo</a>
+              <a href="#" class="card-link" data-i18n="proj.code">Código</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Projeto 4 -->
+        <article class="project-card fade-up" data-category="webapp">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <span class="card-tag">Web App</span>
+            <h2 class="card-title">Blog Pessoal</h2>
+            <p class="card-desc">
+              Blog responsivo com sistema de posts em Markdown, tags, busca e modo leitura otimizado.
+            </p>
+            <div class="card-tech">
+              <span class="tech-pill">Flask</span>
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">MariaDB</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link" data-i18n="proj.demo">Demo</a>
+              <a href="#" class="card-link" data-i18n="proj.code">Código</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Projeto 5 -->
+        <article class="project-card fade-up" data-category="api">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <span class="card-tag">API REST</span>
+            <h2 class="card-title">API de Autenticação</h2>
+            <p class="card-desc">
+              Sistema de autenticação seguro com JWT, refresh tokens, OAuth2 e 2FA por email.
+            </p>
+            <div class="card-tech">
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">Flask</span>
+              <span class="tech-pill">MySQL</span>
+              <span class="tech-pill">JWT</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link" data-i18n="proj.demo">Demo</a>
+              <a href="#" class="card-link" data-i18n="proj.code">Código</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Projeto 6 -->
+        <article class="project-card fade-up" data-category="mobile">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <span class="card-tag">Mobile</span>
+            <h2 class="card-title">App de Hábitos</h2>
+            <p class="card-desc">
+              Aplicativo mobile-first para rastreamento de hábitos com notificações, gráficos e metas semanais.
+            </p>
+            <div class="card-tech">
+              <span class="tech-pill">JavaScript</span>
+              <span class="tech-pill">Node.js</span>
+              <span class="tech-pill">SQLite</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link" data-i18n="proj.demo">Demo</a>
+              <a href="#" class="card-link" data-i18n="proj.code">Código</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+      <!-- /projects-grid -->
+
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer>
+    <div class="footer-content">
+      <span class="footer-logo">Maria Vitória</span>
+      <p class="footer-copy" data-i18n="footer.copy">Feito com ♥ e muito café por Maria Vitória</p>
+      <span class="footer-moon" aria-hidden="true">🌙</span>
+    </div>
+  </footer>
+
+  <script src="/portfolio/script/script.js"></script>
+
+  <!--
+    Script de filtro — específico desta página.
+    Filtra os cards de projeto pelo atributo data-category.
+  -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const cards = document.querySelectorAll('.project-card');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+          // Remove 'active' de todos e adiciona no clicado
+          filterBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+
+          const filter = this.getAttribute('data-filter');
+
+          // Mostra ou oculta os cards conforme o filtro
+          cards.forEach(card => {
+            const cat = card.getAttribute('data-category');
+            if (filter === 'all' || cat === filter) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
+          });
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
