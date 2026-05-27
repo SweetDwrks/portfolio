@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfólio de Maria Vitória — Desenvolvedora Full Stack" />
+
+  <title>Maria Vitória · Desenvolvedora Full Stack</title>
+
+  <!-- Folha de estilos principal -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!--
+    Aplicamos o tema salvo no localStorage ANTES do CSS carregar
+    para evitar o "flash" de tema incorreto ao recarregar a página.
+    Este script inline é executado de forma síncrona.
+  -->
+  <script>
+    (function () {
+      var t = localStorage.getItem('mv-theme');
+      var d = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t || d);
+    })();
+  </script>
+</head>
+
+<body>
+
+  <!-- ══ Canvas da animação lunar — posicionado fixo no fundo ══ -->
+  <canvas id="lunar-canvas" aria-hidden="true"></canvas>
+
+  <!-- ══════════════════════════════════════════════════════════
+       NAVEGAÇÃO PRINCIPAL
+  ══════════════════════════════════════════════════════════ -->
+  <nav role="navigation" aria-label="Navegação principal">
+    <!-- Logo com nome -->
+    <a href="index.html" class="nav-logo">Maria Vitória</a>
+
+    <!-- Links do menu para desktop -->
+    <ul class="nav-links" role="list">
+      <li><a href="index.html"          data-i18n="nav.home"     class="active">Início</a></li>
+      <li><a href="about.html"    data-i18n="nav.about">Sobre</a></li>
+      <li><a href="projects.html" data-i18n="nav.projects">Projetos</a></li>
+      <li><a href="contact.html"  data-i18n="nav.contact">Contato</a></li>
+    </ul>
+
+    <!-- Botões de: tema e idioma --
+    <div class="nav-controls">
+      <!-- Botão de alternar idioma: mostra o próximo idioma -->
+      <button class="ctrl-btn" id="lang-btn" aria-label="Trocar idioma">PT</button>
+
+      <!-- Botão de alternar tema: ícone muda conforme o tema -->
+      <button class="ctrl-btn" id="theme-btn" aria-label="Alternar tema">
+        <span class="theme-icon">🌙</span>
+      </button>
+
+      <!-- Hambúrguer visível apenas em mobile -->
+      <button class="nav-hamburger" id="hamburger" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ══ Menu mobile (drawer lateral) ══ -->
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true">
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu-drawer">
+      <button class="mobile-menu-close" id="mobile-close" aria-label="Fechar menu">✕</button>
+      <a href="index.html"          data-i18n="nav.home">Início</a>
+      <a href="about.html"    data-i18n="nav.about">Sobre</a>
+      <a href="projects.html" data-i18n="nav.projects">Projetos</a>
+      <a href="contact.html"  data-i18n="nav.contact">Contato</a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SEÇÃO HERO — Apresentação principal
+  ══════════════════════════════════════════════ -->
+
+    <div class="container">
+      <div style="max-width: 640px; margin: 0 auto;">
+
+        <!-- Foto ou placeholder circular com anéis de brilho -->
+        <div class="hero-photo-wrap" aria-hidden="true">
+          <!-- Anéis pulsantes ao redor da foto -->
+          <div class="photo-ring"></div>
+          <div class="photo-ring photo-ring-2"></div>
+
+          
+          <div class="hero-photo-placeholder" role="img" aria-label="Foto de Maria Vitória">🌙</div>
+        </div>
+
+        <!-- Saudação e nome -->
+        <p class="hero-subtitle">
+          <span data-i18n="hero.greeting">Olá, eu sou</span>
+        </p>
+
+        <h1 class="hero-title" id="hero-name">
+          Maria <em>Vitória</em>
+        </h1>
+
+        <!-- Linha divisória decorativa -->
+        <div class="divider-line" aria-hidden="true"></div>
+
+        <!-- Função/cargo -->
+        <p class="hero-subtitle" data-i18n="hero.role">Desenvolvedora Full Stack</p>
+
+        <!-- Bio curta -->
+        <p class="hero-bio" data-i18n="hero.bio">
+          Apaixonada por construir experiências digitais elegantes, funcionais e cheias de propósito. Código que respira arte.
+        </p>
+
+        <!-- Botões de ação -->
+        <div class="hero-btns">
+          <a href="projects.html" class="btn-primary" data-i18n="hero.cta.projects">Ver Projetos</a>
+          <a href="contact.html"  class="btn-outline" data-i18n="hero.cta.contact">Falar Comigo</a>
+        </div>
+
+      </div>  
+    </div>
+
+    <!-- Indicador de scroll -->
+    <div class="scroll-hint" aria-hidden="true">
+      <span data-i18n="hero.scroll">Rolar</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SEÇÃO HABILIDADES — Tecnologias organizadas por categoria
+  ══════════════════════════════════════════════════════════ -->
+  <section aria-labelledby="skills-heading">
+    <div class="container">
+
+      <!-- Cabeçalho da seção -->
+      <div class="section-header fade-up">
+        <span class="section-tag" data-i18n="skills.tag">Tecnologias</span>
+        <h2 class="section-title" id="skills-heading">
+          <span data-i18n="skills.title">Minhas</span> <em data-i18n="skills.title.em">habilidades</em>
+        </h2>
+        <p class="section-desc" data-i18n="skills.desc">
+          Ferramentas e tecnologias que uso para construir soluções completas, do front ao back-end.
+        </p>
+      </div>
+
+      <!-- Grade com os grupos de tecnologia -->
+      <div class="skills-wrapper">
+
+        <!-- Grupo: Frontend -->
+        <div class="skill-group fade-up">
+          <h3 class="skill-group-title" data-i18n="skills.frontend">Frontend</h3>
+          <div class="tech-icons">
+            <!-- HTML5 -->
+            <div class="tech-item">
+              <div class="tech-icon icon-html" aria-hidden="true" title="HTML5">
+                <!-- SVG inline: logo HTML5 simplificado -->
+                <svg viewBox="0 0 32 32" width="20" height="20" fill="currentColor">
+                  <path d="M4 2l2.4 27L16 31l9.6-2L28 2zm19.8 8H10.2l.4 4h12.8l-1.2 13-6.2 1.7-6.2-1.7-.4-5h4l.2 2.5 2.4.6 2.4-.6.3-3.5H9.8l-1-11.5h14.4z"/>
+                </svg>
+              </div>
+              <span class="tech-name">HTML5</span>
+            </div>
+
+            <!-- CSS3 -->
+            <div class="tech-item">
+              <div class="tech-icon icon-css" aria-hidden="true" title="CSS3">
+                <svg viewBox="0 0 32 32" width="20" height="20" fill="currentColor">
+                  <path d="M4 2l2.4 27L16 31l9.6-2L28 2zm20 8l-.4 4H12l.2 3h11l-1 11-6.2 1.7-6.2-1.7-.4-5h4l.2 2.5 2.4.6 2.4-.6.3-3.5H9.8l-1-11.5h15.2z"/>
+                </svg>
+              </div>
+              <span class="tech-name">CSS3</span>
+            </div>
+
+            <!-- JavaScript -->
+            <div class="tech-item">
+              <div class="tech-icon icon-js" aria-hidden="true" title="JavaScript">
+                <svg viewBox="0 0 32 32" width="18" height="18" fill="currentColor">
+                  <rect width="28" height="28" x="2" y="2" rx="2"/>
+                  <path fill="#fff" d="M18 22.5c.7 1.2 1.6 2 3.2 2 1.3 0 2.2-.7 2.2-1.6 0-1.1-.9-1.5-2.4-2.1l-.8-.4c-2.4-1-4-2.3-4-5 0-2.5 1.9-4.4 4.8-4.4 2.1 0 3.6.7 4.7 2.6l-2.6 1.6c-.6-1-1.2-1.4-2.1-1.4-.9 0-1.5.6-1.5 1.4 0 1 .6 1.4 2 2l.8.4c2.8 1.2 4.4 2.4 4.4 5.1 0 2.9-2.3 4.6-5.4 4.6-3 0-5-1.4-5.9-3.3zm-10.4.2c.5.9 1 1.7 2.1 1.7.7 0 1.3-.3 1.3-1.5v-9.5h3.2v9.5c0 2.5-1.5 3.6-3.6 3.6-1.9 0-3-.9-3.7-2.3z"/>
+                </svg>
+              </div>
+              <span class="tech-name">JavaScript</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grupo: Backend -->
+        <div class="skill-group fade-up">
+          <h3 class="skill-group-title" data-i18n="skills.backend">Backend</h3>
+          <div class="tech-icons">
+            <!-- Python -->
+            <div class="tech-item">
+              <div class="tech-icon icon-py" aria-hidden="true" title="Python">
+                <svg viewBox="0 0 32 32" width="20" height="20">
+                  <path fill="#3776AB" d="M15.9 2C10.6 2 9 4.5 9 7v3h7v1H6.5C3.5 11 2 13 2 16s1.5 5 4.5 5H9v-3.5c0-2 1.5-4 4-4h6c2.5 0 4-2 4-4V7c0-2.5-1.5-5-7.1-5zm-1.4 3c.8 0 1.5.7 1.5 1.5S15.3 8 14.5 8 13 7.3 13 6.5 13.7 5 14.5 5z"/>
+                  <path fill="#FFD43B" d="M16.1 30c5.3 0 6.9-2.5 6.9-5v-3h-7v-1h9.5c3 0 4.5-2 4.5-5s-1.5-5-4.5-5H23v3.5c0 2-1.5 4-4 4h-6c-2.5 0-4 2-4 4V25c0 2.5 1.5 5 7.1 5zm1.4-3c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5z"/>
+                </svg>
+              </div>
+              <span class="tech-name">Python</span>
+            </div>
+
+            <!-- Flask -->
+            <div class="tech-item">
+              <div class="tech-icon icon-flask" aria-hidden="true" title="Flask">
+                <svg viewBox="0 0 32 32" width="20" height="20" fill="currentColor">
+                  <path d="M12 2v8L6 24c-.5 1.2 0 3 2 4h12c2 0 2.5-1.8 2-4L16 10V2zm2 2h4v7l5.5 13c.3.8-.2 2-1.5 2H10c-1.3 0-1.8-1.2-1.5-2L14 11z"/>
+                  <circle cx="20" cy="16" r="1.5"/>
+                  <circle cx="18" cy="21" r="1"/>
+                  <circle cx="22" cy="20" r="1"/>
+                </svg>
+              </div>
+              <span class="tech-name">Flask</span>
+            </div>
+
+            <!-- Node.js -->
+            <div class="tech-item">
+              <div class="tech-icon icon-node" aria-hidden="true" title="Node.js">
+                <svg viewBox="0 0 32 32" width="20" height="20">
+                  <path fill="#339933" d="M16 2L3 9.5v13L16 30l13-7.5v-13zm0 2.5l10.5 6.1v12L16 28 5.5 22.6v-12z"/>
+                  <path fill="#339933" d="M16 8c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 3c.8 0 1.5.7 1.5 1.5S16.8 14 16 14s-1.5-.7-1.5-1.5S15.2 11 16 11zm0 10c-2.2 0-4.1-1.2-5.2-3h10.4c-1.1 1.8-3 3-5.2 3z"/>
+                </svg>
+              </div>
+              <span class="tech-name">Node.js</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grupo: Database -->
+        <div class="skill-group fade-up">
+          <h3 class="skill-group-title" data-i18n="skills.database">Database</h3>
+          <div class="tech-icons">
+            <!-- SQLite -->
+            <div class="tech-item">
+              <div class="tech-icon icon-sqlite" aria-hidden="true" title="SQLite">
+                <svg viewBox="0 0 32 32" width="20" height="20" fill="currentColor">
+                  <path d="M6 4h8c6 0 10 4 10 12 0 6-3 10-8 11v-4c3-1 5-4 5-7 0-5-3-8-7-8H6zm2 2v20h4V6z"/>
+                  <path d="M20 26l2-2 2 4-2 2z"/>
+                </svg>
+              </div>
+              <span class="tech-name">SQLite</span>
+            </div>
+
+            <!-- MySQL -->
+            <div class="tech-item">
+              <div class="tech-icon icon-mysql" aria-hidden="true" title="MySQL">
+                <svg viewBox="0 0 32 32" width="20" height="20">
+                  <path fill="#4479A1" d="M2 10h4v12H2zm6 0h4v12H8zm6 0h4v12h-4zm6 0h4v12h-4z"/>
+                  <path fill="#4479A1" d="M2 8h26v3H2zm0 13h26v3H2z"/>
+                </svg>
+              </div>
+              <span class="tech-name">MySQL</span>
+            </div>
+
+            <!-- MariaDB -->
+            <div class="tech-item">
+              <div class="tech-icon icon-maria" aria-hidden="true" title="MariaDB">
+                <svg viewBox="0 0 32 32" width="20" height="20" fill="currentColor">
+                  <path d="M4 8h6v16H4zm9 0h2l4 10 4-10h2l-5 16h-2z"/>
+                  <ellipse cx="16" cy="6" rx="12" ry="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <span class="tech-name">MariaDB</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grupo: Ferramentas -->
+        <div class="skill-group fade-up">
+          <h3 class="skill-group-title" data-i18n="skills.tools">Ferramentas</h3>
+          <div class="tech-icons">
+            <!-- Git -->
+            <div class="tech-item">
+              <div class="tech-icon icon-git" aria-hidden="true" title="Git">
+                <svg viewBox="0 0 32 32" width="20" height="20">
+                  <path fill="#F05032" d="M29.5 14.5l-12-12a2.1 2.1 0 0 0-3 0l-2.6 2.6 3.3 3.3a2.5 2.5 0 0 1 3.2 3.2l3.2 3.2a2.5 2.5 0 1 1-1.5 1.5l-3-3v7.8a2.5 2.5 0 1 1-2 0V13a2.5 2.5 0 0 1-1.3-3.3L9.5 6.4l-7 7a2.1 2.1 0 0 0 0 3l12 12a2.1 2.1 0 0 0 3 0l12-12a2.1 2.1 0 0 0 0-2.9z"/>
+                </svg>
+              </div>
+              <span class="tech-name">Git</span>
+            </div>
+
+            <!-- GitHub -->
+            <div class="tech-item">
+              <div class="tech-icon icon-github" aria-hidden="true" title="GitHub">
+                <svg viewBox="0 0 32 32" width="20" height="20" fill="currentColor">
+                  <path d="M16 2A14 14 0 0 0 2 16c0 6.2 4 11.4 9.6 13.2.7.1 1-.3 1-.7v-2.4c-3.9.8-4.7-1.9-4.7-1.9-.6-1.6-1.5-2-1.5-2-1.2-.9.1-.8.1-.8 1.4.1 2.1 1.4 2.1 1.4 1.2 2.1 3.2 1.5 4 1.1.1-.9.5-1.5.9-1.8-3-.3-6.2-1.5-6.2-6.8 0-1.5.5-2.7 1.4-3.7-.1-.3-.6-1.7.1-3.6 0 0 1.1-.4 3.7 1.4a13 13 0 0 1 6.8 0c2.6-1.8 3.7-1.4 3.7-1.4.7 1.9.3 3.3.1 3.6.9 1 1.4 2.2 1.4 3.7 0 5.3-3.2 6.5-6.3 6.8.5.4.9 1.2.9 2.5v3.7c0 .4.3.8 1 .7A14 14 0 0 0 30 16 14 14 0 0 0 16 2z"/>
+                </svg>
+              </div>
+              <span class="tech-name">GitHub</span>
+            </div>
+
+            <!-- VS Code -->
+            <div class="tech-item">
+              <div class="tech-icon icon-vscode" aria-hidden="true" title="VS Code">
+                <svg viewBox="0 0 32 32" width="20" height="20">
+                  <path fill="#007ACC" d="M29.2 4.6L22 1.5a2 2 0 0 0-2.2.4L2.3 17.5a1.3 1.3 0 0 0 0 2l1.9 1.7a1.3 1.3 0 0 0 1.7.1L27 6.2v19.6L5.9 10.7a1.3 1.3 0 0 0-1.7.1l-1.9 1.7a1.3 1.3 0 0 0 0 2l17.5 15.6a2 2 0 0 0 2.2.4l7.2-3.1A2 2 0 0 0 30.5 25V7a2 2 0 0 0-1.3-2.4z"/>
+                </svg>
+              </div>
+              <span class="tech-name">VS Code</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /skills-wrapper -->
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SEÇÃO PROJETOS EM DESTAQUE — Prévia dos 3 melhores
+  ══════════════════════════════════════════════════════════ -->
+  <section aria-labelledby="projects-heading">
+    <div class="container">
+
+      <div class="section-header fade-up">
+        <span class="section-tag" data-i18n="proj.tag">Portfólio</span>
+        <h2 class="section-title" id="projects-heading">
+          <span data-i18n="proj.title">Projetos</span> <em data-i18n="proj.title.em">em destaque</em>
+        </h2>
+        <p class="section-desc" data-i18n="proj.desc">
+          Uma seleção dos trabalhos que mais me orgulho, combinando criatividade e técnica.
+        </p>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- Card 1: Gestão de Tarefas -->
+        <article class="project-card fade-up">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <span class="card-tag" data-i18n="proj.p1.tag">Web App</span>
+            <h3 class="card-title" data-i18n="proj.p1.title">Gestão de Tarefas</h3>
+            <p class="card-desc" data-i18n="proj.p1.desc">
+              Aplicação full stack para organização de tarefas com autenticação, categorias e filtros avançados.
+            </p>
+            <div class="card-tech">
+              <span class="tech-pill">Python</span>
+              <span class="tech-pill">Flask</span>
+              <span class="tech-pill">SQLite</span>
+              <span class="tech-pill">JavaScript</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link" data-i18n="proj.demo">Demo</a>
+              <a href="#" class="card-link" data-i18n="proj.code">Código</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: API E-commerce -->
+        <article class="project-card fade-up">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <span class="card-tag" data-i18n="proj.p2.tag">API REST</span>
+            <h3 class="card-title" data-i18n="proj.p2.title">API de E-commerce</h3>
+            <p class="card-desc" data-i18n="proj.p2.desc">
+              API robusta com rotas protegidas, carrinho de compras, pagamentos e painel administrativo.
+            </p>
+            <div class="card-tech">
+              <span class="tech-pill">Node.js</span>
+              <span class="tech-pill">MySQL</span>
+              <span class="tech-pill">JavaScript</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link" data-i18n="proj.demo">Demo</a>
+              <a href="#" class="card-link" data-i18n="proj.code">Código</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3: Dashboard Analytics -->
+        <article class="project-card fade-up">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <span class="card-tag" data-i18n="proj.p3.tag">Dashboard</span>
+            <h3 class="card-title" data-i18n="proj.p3.title">Painel Analytics</h3>
+            <p class="card-desc" data-i18n="proj.p3.desc">
+              Dashboard interativo com visualizações de dados em tempo real, filtros e exportação em CSV.
+            </p>
+            <div class="card-tech">
+              <span class="tech-pill">HTML5</span>
+              <span class="tech-pill">CSS3</span>
+              <span class="tech-pill">JavaScript</span>
+              <span class="tech-pill">Python</span>
+            </div>
+            <div class="card-links">
+              <a href="#" class="card-link" data-i18n="proj.demo">Demo</a>
+              <a href="#" class="card-link" data-i18n="proj.code">Código</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Botão para ver todos os projetos -->
+      <div style="text-align: center; margin-top: 3rem;" class="fade-up">
+        <a href="projects.html" class="btn-outline" data-i18n="proj.all">Ver todos os projetos</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SEÇÃO SOBRE — Resumo com link para página completa
+  ══════════════════════════════════════════════════════════ -->
+  <section aria-labelledby="about-heading">
+    <div class="container">
+
+      <div class="section-header fade-up">
+        <span class="section-tag" data-i18n="about.tag">Sobre mim</span>
+        <h2 class="section-title" id="about-heading">
+          <span data-i18n="about.title">Quem sou</span> <em data-i18n="about.title.em">eu</em>
+        </h2>
+      </div>
+
+      <div style="max-width: 680px; margin: 0 auto; text-align: center;" class="fade-up">
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.9; margin-bottom: 1.25rem;" data-i18n="about.p1">
+          Sou Maria Vitória, desenvolvedora full stack apaixonada por criar soluções digitais que unem estética e funcionalidade.
+        </p>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.9; margin-bottom: 2rem;" data-i18n="about.p2">
+          Trabalho com desenvolvimento web desde 2022, construindo projetos que vão de APIs robustas a interfaces cuidadosamente projetadas.
+        </p>
+        <a href="about.html" class="btn-primary" data-i18n="nav.about">Sobre</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       RODAPÉ
+  ══════════════════════════════════════════════════════════ -->
+  <footer role="contentinfo">
+    <div class="footer-content">
+      <span class="footer-logo">Maria Vitória</span>
+      <p class="footer-copy" data-i18n="footer.copy">Feito com ♥ e muito café por Maria Vitória</p>
+      <span class="footer-moon" aria-hidden="true">🌙</span>
+    </div>
+  </footer>
+
+  <!-- Script principal — carregado no final para não bloquear a renderização -->
+  <script src="script.js"></script>
+
+</body>
+</html>
